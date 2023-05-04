@@ -50,16 +50,45 @@ public class MainActivity extends AppCompatActivity {
       split.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+
             if(amountText.getText().toString().trim().length() != 0 &&
                     numOfPaxText.getText().toString().trim().length() != 0) {
                 double newAmt = 0.0;
+                double oldAmt = newAmt = Double.parseDouble(amountText.getText().toString());
                 if (!svs.isChecked() && !gst.isChecked()) {
-                    newAmt = Double.parseDouble(amountText.getText().toString());
+                    newAmt = oldAmt;
+                }else if (svs.isChecked() && !gst.isChecked()) {
+                    newAmt = oldAmt * 1.1;
+                }else if (!svs.isChecked() && gst.isChecked()) {
+                    newAmt = oldAmt * 1.08;
+                }else {
+                    newAmt = ((oldAmt * 1.1) * 1.08);
                 }
-            }
+
+                //Discount %
+                if (discountText.getText().toString().trim().length() != 0) {
+                    newAmt * = 1 - oldAmt / 100;
+                }
+
+                totalBill.setText("Total Bill: $" + String.format("%.2f", newAmt));
+                int people = Integer.parseInt(numOfPaxText.getText().toString());
+                if (people != 1){
+                    eachPays.setText("Each Pays: $" + String.format("%.2f", newAmt / people));
+            }else {
+                    eachPays.setText("Each Pays: $" + newAmt);
+                }
         }
 
     });
+
+
+    reset.setOnClickListener(new View.OnClickListener()){
+        @Override
+        public void onClick(View v) {
+            amountText.setText("")
+            }
+        }
 
 
 }
