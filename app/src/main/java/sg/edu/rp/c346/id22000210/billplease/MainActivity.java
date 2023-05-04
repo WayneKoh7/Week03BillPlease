@@ -49,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                //trim is to check for empty input e.g. blank spaces will be trimmed
+                //length returns the length of a specific string
+                //toString returns a string that represents an object
                 if (amountText.getText().toString().trim().length() != 0 &&
                         numOfPaxText.getText().toString().trim().length() != 0) {
                     double newAmt = 0.0;
